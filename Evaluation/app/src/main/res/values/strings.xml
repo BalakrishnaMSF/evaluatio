@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Meal Picker</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item">item</string>
+    <string name="meal_list">Meal List</string>
+    <string name="meal_cart">Meal Cart</string>
+</resources>
