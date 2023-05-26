@@ -10,16 +10,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements BottomSheetClickListener{
     private MyAdapter myAdapter;
     RecyclerView recyclerView;
     private List<Categories> categoriesList;
+//    public void MyAdapter(List<Categories> categoriesList) {
+//        categoriesList = this.categoriesList;
+//
+//    }
 
     public CategoriesFragment() {
     }
@@ -42,8 +50,8 @@ public class CategoriesFragment extends Fragment {
         fetchDataFromApi();
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        myAdapter = new MyAdapter(categoriesList);
-       // System.out.println("TEST ===> " + categoriesList.size());
+        myAdapter = new MyAdapter(categoriesList, getContext(), this);
+        //System.out.println("TEST ===> " + categoriesList.size());
         recyclerView.setAdapter(myAdapter);
     }
 
@@ -65,23 +73,16 @@ public class CategoriesFragment extends Fragment {
         });
     }
 
-    void fetchBottomSheet() {
-        RetrofitApi retrofitApi = RetrofitClient.getRetrofitInstance().create(RetrofitApi.class);
-        Call<Response> call = retrofitApi.getSpecificPost();
-        call.enqueue(new Callback<Response>() {
-            @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                assert response.body() != null;
-                categoriesList.addAll(response.body().getSpecificPost());
-                myAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<Response> call, Throwable t) {
-                System.out.println("Response Failure" + t.getMessage());
-            }
-        });
+    @Override
+    public void onItemclicked(String description){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View bottomSheetView = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        TextView descriptionTextView = bottomSheetView.findViewById(R.id.text);
+        descriptionTextView.setText(description);
+        bottomSheetDialog.show();
 
     }
+
 
 }

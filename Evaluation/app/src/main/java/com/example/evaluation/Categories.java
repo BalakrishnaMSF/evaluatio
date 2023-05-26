@@ -14,7 +14,6 @@ public class Categories {
     @SerializedName("strCategoryDescription")
     private String strCategoryDescription;
 
-
     @SerializedName("strCategoryThumb")
     private String strCategoryThumb;
 

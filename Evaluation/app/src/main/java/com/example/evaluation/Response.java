@@ -12,9 +12,9 @@ public class Response{
         this.strDescription = strDescription;
     }
 
-    public void setCategories(List<Categories> categories){
-        this.categories = categories;
-    }
+//    public void setCategories(List<Categories> categories){
+//        this.categories = categories;
+//    }
 
     public List<Categories> getCategories(){
         return categories;
@@ -26,7 +26,6 @@ public class Response{
                         "categories = '" + categories + '\'' +
                         "}";
     }
-
     @SerializedName("strDescription")
     private List<Categories> strDescription;
 
@@ -34,6 +33,5 @@ public class Response{
     public List<Categories> getSpecificPost(){
         return strDescription;
     }
-
 
 }
