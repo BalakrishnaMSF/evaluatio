@@ -12,9 +12,6 @@ public class Response{
         this.strDescription = strDescription;
     }
 
-//    public void setCategories(List<Categories> categories){
-//        this.categories = categories;
-//    }
 
     public List<Categories> getCategories(){
         return categories;

@@ -1,46 +1,48 @@
 package com.example.evaluation;
 
 import android.content.Context;
-import android.content.Intent;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+
+
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    BottomSheetClickListener bottomListener;
+     BottomSheetClickListener bottomListener;
 
      List<Categories> Categories_list;
      private Context context;
 
-    public MyAdapter(List<Categories> categories_list , Context ctx ,BottomSheetClickListener listener) {
+
+     public MyAdapter(List<Categories> categories_list , Context ctx ,BottomSheetClickListener listener) {
         this.context = ctx;
         Categories_list = categories_list;
         this.bottomListener = listener;
 
     }
     static class MyViewHolder extends RecyclerView.ViewHolder{
-        public BottomSheetClickListener bottomListener;
+
+
+
         public final View mView;
         TextView itemName;
+        Button add;
         TextView strDescription;
         RelativeLayout layout;
         View seperator;
 
-        private ImageView imageView;
+        private final ImageView imageView;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -50,6 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             seperator = mView.findViewById(R.id.seperator);
             imageView = mView.findViewById(R.id.imageview);
             strDescription = mView.findViewById(R.id.text);
+            add = mView.findViewById(R.id.add);
 
         }
 
@@ -68,16 +71,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressWarnings("RecyclerView") int position) {
-       // System.out.println("TEST ADAPTER "+Categories_list.get(position).getStrCategory());
 
         holder.itemName.setText(Categories_list.get(position).getStrCategory());
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            }
-//
-//        });
 
         Picasso.get()
                 .load(Categories_list.get(position).getStrCategoryThumb())
@@ -87,18 +82,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
 
-//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
-//                View bottomSheetView = LayoutInflater.from(context).inflate(R.layout.bottom_sheet,null);
-//                bottomSheetDialog.setContentView(bottomSheetView);
-//                TextView descriptionTextView = bottomSheetView.findViewById(R.id.text);
-//                descriptionTextView.setText(Categories_list.get(position).getStrCategoryDescription());
-//                bottomSheetDialog.show();
-//
+
                   bottomListener.onItemclicked(Categories_list.get(position).getStrCategoryDescription());
+
             }
         });
 
+
     }
+
 
 
     @Override

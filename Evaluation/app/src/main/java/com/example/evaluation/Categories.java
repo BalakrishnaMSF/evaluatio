@@ -17,6 +17,10 @@ public class Categories {
     @SerializedName("strCategoryThumb")
     private String strCategoryThumb;
 
+    public Categories(String strCategoryDescription) {
+        this.strCategoryDescription = strCategoryDescription;
+    }
+
     public void setStrCategory(String strCategory){
         this.strCategory = strCategory;
     }
