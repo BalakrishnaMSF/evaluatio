@@ -1,7 +1,7 @@
 package com.example.evaluation;
 
 public interface BottomSheetClickListener {
-    void onItemclicked(String description);
+    void onItemclicked(Categories categories);
 
-
+//    void onItemClicked1(String description, String logo);
 }

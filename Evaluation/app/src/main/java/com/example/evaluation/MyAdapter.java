@@ -16,7 +16,6 @@ import java.util.List;
 
 
 
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
      BottomSheetClickListener bottomListener;
@@ -81,16 +80,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                  bottomListener.onItemclicked(Categories_list.get(position).getStrCategoryDescription());
-
+                  bottomListener.onItemclicked(Categories_list.get(position));
             }
         });
 
-
     }
-
 
 
     @Override
@@ -102,36 +96,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public interface OnClickListener {
         void onClick(int position, Categories model);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    public static void fetchBottomSheet() {
 //        RetrofitApi retrofitApi = RetrofitClient.getRetrofitInstance().create(RetrofitApi.class);

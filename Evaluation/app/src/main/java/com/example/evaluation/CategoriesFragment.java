@@ -1,15 +1,14 @@
 package com.example.evaluation;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,18 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.widget.Toast;
 
 
 public class CategoriesFragment extends Fragment implements BottomSheetClickListener {
@@ -36,6 +31,8 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
 
     RecyclerView recyclerView;
     private List<Categories> categoriesList;
+//
+    ItemDao itemDao;
 
 
 
@@ -50,6 +47,10 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         categoriesList = new ArrayList<>();
         return view;
+//        database= Room.databaseBuilder(getActivity(),AppDatabase.class,"app_database")
+//                .allowMainThreadQueries().fallbackToDestructiveMigration().build();
+//        itemDao = database.itemDao();
+//        fetchDataFromApi();
 
     }
 
@@ -62,7 +63,9 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
         myAdapter = new MyAdapter(categoriesList, getContext(), this);
         //System.out.println("TEST ===> " + categoriesList.size());
         recyclerView.setAdapter(myAdapter);
+
     }
+
 
     private void fetchDataFromApi() {
         RetrofitApi retrofitApi = RetrofitClient.getRetrofitInstance().create(RetrofitApi.class);
@@ -83,24 +86,82 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
     }
 
     @Override
-    public void onItemclicked(String description) {
+    public void onItemclicked(Categories categories) {
         DatabaseHelper helper = new DatabaseHelper(getContext());
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
         View bottomSheetView = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet, null);
         bottomSheetDialog.setContentView(bottomSheetView);
         TextView descriptionTextView = bottomSheetView.findViewById(R.id.text);
         Button add = bottomSheetView.findViewById(R.id.add);
-        descriptionTextView.setText(description);
+        descriptionTextView.setText(categories.getStrCategoryDescription());
         bottomSheetDialog.show();
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("DAta",description);
-                helper.insert(description);
-                helper.getData(description);
+//                insertItemToDatabase(categories);
+//
+//                Toast.makeText(getActivity(), "Items added successfully", Toast.LENGTH_SHORT).show();
+//
+//                bottomSheetDialog.dismiss();
 
+                helper.insert(categories);
+                bottomSheetDialog.dismiss();
             }
         });
     }
 
+    private void insertItemToDatabase(Categories category) {
+        ItemEntity item = new ItemEntity(category.getStrCategory(), category.getStrCategoryThumb(), category.getStrCategoryDescription());
+        itemDao.insertItem(item);
+    }
+
+//    @Override
+//    public void onItemClicked(Category category) {
+//        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+//        View bottomSheetView = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet, null);
+//        bottomSheetDialog.setContentView(bottomSheetView);
+//
+//        TextView descriptionTextView = bottomSheetView.findViewById(R.id.desc);
+//        descriptionTextView.setText(category.getStrCategoryDescription());
+//
+//        Button addButton = bottomSheetView.findViewById(R.id.add);
+//
+//        addButton.setOnClickListener(v -> {
+//            insertItemToDatabase(category); // pass remoteList.get(position)
+//
+//            Toast.makeText(getActivity(), "Items added successfully", Toast.LENGTH_SHORT).show();
+//
+//            bottomSheetDialog.dismiss();
+//        });
+//
+//        bottomSheetDialog.show();
+//    }
+
+//    @Override
+//    public void onItemClicked1(String description, String logo){
+//        DatabaseHelper helper = new DatabaseHelper(getContext());
+//        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity());
+//        View bottomSheetView = LayoutInflater.from(getActivity()).inflate(R.layout.bottom_sheet, null);
+//        bottomSheetDialog.setContentView(bottomSheetView);
+//        TextView descriptionTextView = bottomSheetView.findViewById(R.id.text);
+//        Button add = bottomSheetView.findViewById(R.id.add);
+//        descriptionTextView.setText(description);
+//        bottomSheetDialog.show();
+//        add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                helper.insert(new PojoClass(description,logo));
+//                List<PojoClass> contacts = helper.getAllContacts();
+//                for (PojoClass cn : contacts) {
+//                    String log = "ItemName: " + cn.getStrCategory() + " ,Logo: " + cn.getStrCategoryThumb() ;
+//                    Log.d("Name: ", log);
+//                }
+//            }
+//        });
+//    }
 }
+
+
+
+
+

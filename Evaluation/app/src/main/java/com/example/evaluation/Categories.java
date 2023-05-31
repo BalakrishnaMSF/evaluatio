@@ -1,6 +1,5 @@
 package com.example.evaluation;
 
-
 import com.google.gson.annotations.SerializedName;
 
 public class Categories {
@@ -17,9 +16,11 @@ public class Categories {
     @SerializedName("strCategoryThumb")
     private String strCategoryThumb;
 
-    public Categories(String strCategoryDescription) {
-        this.strCategoryDescription = strCategoryDescription;
+    public Categories(String strCategory, String strCategoryThumb) {
+        this.strCategory = strCategory;
+        this.strCategoryThumb = strCategoryThumb;
     }
+
 
     public void setStrCategory(String strCategory){
         this.strCategory = strCategory;
