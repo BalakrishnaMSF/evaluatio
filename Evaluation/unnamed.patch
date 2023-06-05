@@ -1,0 +1,19 @@
+Index: Evaluation/.idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Evaluation/.idea/inspectionProfiles/Project_Default.xml b/Evaluation/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(revision 08d2729b78cc1c9dd43c9fae5d8c7c0185560f29)
++++ b/Evaluation/.idea/inspectionProfiles/Project_Default.xml	(revision 08d2729b78cc1c9dd43c9fae5d8c7c0185560f29)
+@@ -0,0 +1,8 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
++      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,com.example.evaluation.DatabaseManager,insert" />
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file

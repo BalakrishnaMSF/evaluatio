@@ -20,14 +20,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
      BottomSheetClickListener bottomListener;
 
+
      List<Categories> Categories_list;
      private Context context;
+    public void setItems(List<Categories> items) {
+        this.Categories_list = items;
+    }
 
 
      public MyAdapter(List<Categories> categories_list , Context ctx ,BottomSheetClickListener listener) {
         this.context = ctx;
         Categories_list = categories_list;
         this.bottomListener = listener;
+
 
     }
     static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -36,7 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public final View mView;
         TextView itemName;
-        Button add;
+        Button add,remove;
         TextView strDescription;
         RelativeLayout layout;
         View seperator;
@@ -52,9 +57,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             imageView = mView.findViewById(R.id.imageview);
             strDescription = mView.findViewById(R.id.text);
             add = mView.findViewById(R.id.add);
+            remove = mView.findViewById(R.id.remove);
 
         }
-
 
 
     }
@@ -83,6 +88,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                   bottomListener.onItemclicked(Categories_list.get(position));
             }
         });
+//        holder.remove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                bottomSheet2.onItemClicked1();
+//            }
+//        });
 
     }
 

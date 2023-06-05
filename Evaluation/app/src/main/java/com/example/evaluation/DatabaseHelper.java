@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String STR_CATEGORY = "name";
     private static final String STR_CAT_THUMB = "logo";
 
+    private static DatabaseHelper instance;
 
-
-//    private static final String STR_CAT_DES = "description";
+    public static synchronized DatabaseHelper getInstance(Context context) {
+        if (instance == null) {
+            instance = new DatabaseHelper(context.getApplicationContext());
+        }
+        return instance;
+    }
 
 
     public DatabaseHelper(Context context) {
@@ -44,14 +50,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-//    public void  insert(String data){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(DatabaseHelper.STR_CATEGORY_DES,data);
-//        db.insert(DatabaseHelper.DATABASE_TABLE,null,contentValues);
-//
-//    }
-
 
     void insert(Categories categories) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -62,57 +60,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void remove(Categories categories) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("MEAL",categories.getIdCategory(),null);
+        db.close();
+    }
 
 
-
-
-//    public List<PojoClass> getAllContacts() {
-//        List<PojoClass> contactList = new ArrayList<>();
-//        String selectQuery = "SELECT  * FROM " + DATABASE_TABLE;
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(selectQuery, null);
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                PojoClass contact = new PojoClass();
-//                contact.setIdCategory(cursor.getString(0));
-//                contact.setStrCategory(cursor.getString(1));
-//                contact.setStrCategoryThumb(cursor.getString(2));
-//                contact.setStrCategoryDescription(cursor.getString(2));
-//                contactList.add(contact);
-//            } while (cursor.moveToNext());
-//        }
-//        return contactList;
-//    }
-
-
-
-
-
-
-
-//
-//    public Cursor getAllData() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT * FROM DATABASE_NAME", null);
-//        return cursor;
-//    }
-
-
-
-
-//    Categories getData(String des) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = db.query(DATABASE_TABLE, new String[]{STR_CATEGORY_DES}, STR_CATEGORY_DES + "",
-//                new String[]{des}, null, null, null, null);
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        Categories contact = new Categories((cursor.getString(0)));
-//        return contact;
-//
-//    }
-
+    public List<Categories> getAllContacts() {
+        List<Categories> contactList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + DATABASE_TABLE;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Categories contact = new Categories(DatabaseHelper.STR_CATEGORY,DatabaseHelper.STR_CAT_THUMB);
+                contact.setIdCategory(cursor.getString(0));
+                contact.setStrCategory(cursor.getString(1));
+                contact.setStrCategoryThumb(cursor.getString(2));
+                contact.setStrCategoryDescription(cursor.getString(2));
+                contactList.add(contact);
+            } while (cursor.moveToNext());
+        }
+        return contactList;
+    }
 
 }

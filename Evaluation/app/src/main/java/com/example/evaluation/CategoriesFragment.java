@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +30,8 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
     RecyclerView recyclerView;
     private List<Categories> categoriesList;
 //
-    ItemDao itemDao;
+
+    DatabaseHelper db;
 
 
 
@@ -98,21 +97,17 @@ public class CategoriesFragment extends Fragment implements BottomSheetClickList
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                insertItemToDatabase(categories);
-//
-//                Toast.makeText(getActivity(), "Items added successfully", Toast.LENGTH_SHORT).show();
-//
-//                bottomSheetDialog.dismiss();
-
                 helper.insert(categories);
                 bottomSheetDialog.dismiss();
+//                Log.d("Reading: ", "Reading all contacts..");
+//                List<Categories> contacts = helper.getAllContacts();
+//
+//                for (Categories cn : contacts) {
+//                    String log = "Id: " + cn.getStrCategory() + " ,Name: " + cn.getStrCategoryThumb();
+//                    Log.d("Name: ", log);
+//                }
             }
         });
-    }
-
-    private void insertItemToDatabase(Categories category) {
-        ItemEntity item = new ItemEntity(category.getStrCategory(), category.getStrCategoryThumb(), category.getStrCategoryDescription());
-        itemDao.insertItem(item);
     }
 
 //    @Override
