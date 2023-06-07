@@ -24,7 +24,6 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="282dp"
         android:gravity="center"
-        android:onClick="broadcastIntent"
         android:text="@string/broadcast_receiver"
         android:textSize="35sp"
         android:textColor="@color/design_default_color_secondary"/>
