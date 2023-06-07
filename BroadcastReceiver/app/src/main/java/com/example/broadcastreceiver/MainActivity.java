@@ -19,10 +19,11 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(objReceiver,intentFilter);
 
     }
-//    public void broadcastIntent(View view){
+
+//
+//   public void broadcastIntent(View view){
 //        Intent intent = new Intent();
 //        intent.setAction("android.intent.action.BATTERY_LOW");
-//        intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 //        sendBroadcast(intent);
 //    }
 }
